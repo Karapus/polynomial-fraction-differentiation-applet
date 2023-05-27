@@ -12,7 +12,7 @@ public class VarTok extends Token {
   public String getVar() {
     return name;
   }
-  private static Pattern pattern = Pattern.compile("[a-z]");
+  private static Pattern pattern = Pattern.compile("^x");
   public static Optional<Token> match(String str, int pos) {
     return Token.match(VarTok.class, pattern, str, pos);
   }

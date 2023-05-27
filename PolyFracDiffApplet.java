@@ -1,4 +1,7 @@
 import latex.Lexer;
+import latex.ast.Node;
+import latex.ast.Frac;
+import latex.ast.ParserError;
 import latex.tokens.Token;
 
 import java.util.ArrayList;
@@ -30,6 +33,13 @@ public class PolyFracDiffApplet extends Applet implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == button) {
       tokens = lexer.split(input.getText());
+      try {
+        Node astNode = Frac.parse(tokens);
+        System.out.println(astNode.toString());
+      } catch (ParserError parserErr) {
+        System.out.println("ERROR: " + parserErr.toString());
+        parserErr.printStackTrace(System.out);
+      }
     }
   }
 }

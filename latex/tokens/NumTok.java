@@ -12,7 +12,7 @@ public class NumTok extends Token {
   public float getNum() {
     return num;
   }
-  private static Pattern pattern = Pattern.compile("(([1-9][0-9]+)|[0-9])((\\.[0-9]+)?)");
+  private static Pattern pattern = Pattern.compile("^(([1-9][0-9]+)|[0-9])((\\.[0-9]+)?)");
   public static Optional<Token> match(String str, int pos) {
     return Token.match(NumTok.class, pattern, str, pos);
   }

@@ -43,6 +43,7 @@ public class Lexer {
         }
       }
     }
+    tokens.add(new EndTok(pos));
     return tokens;
   }
 }
