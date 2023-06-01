@@ -31,6 +31,8 @@ public abstract class Term implements Node {
   static public Term getDefault() {
     return new SimpleTerm(1.0);
   }
+  abstract public Term derivative();
+  abstract public Term clone();
 }
 
 class FullTerm extends Term {
@@ -47,9 +49,13 @@ class FullTerm extends Term {
     varName = n;
   }
   public String toString() {
-    return "Term (" + String.valueOf(coeficient) + ", "
-      + varName + ", "
-      + String.valueOf(power) + ")";
+    return String.valueOf(coeficient) + varName + "^"+ String.valueOf(power);
+  }
+  public FullTerm derivative() {
+    return new FullTerm(coeficient * power, varName, power - 1.0);
+  }
+  public FullTerm clone() {
+    return new FullTerm(coeficient, varName, power);
   }
 }
 
@@ -58,6 +64,12 @@ class SimpleTerm extends Term {
     super(c);
   }
   public String toString() {
-    return "Term (" + String.valueOf(coeficient) + ", <none>, zero)";
+    return String.valueOf(coeficient);
+  }
+  public SimpleTerm derivative() {
+    return new SimpleTerm(0);
+  }
+  public SimpleTerm clone() {
+    return new SimpleTerm(coeficient);
   }
 }

@@ -9,6 +9,6 @@ public class RBrTok extends Token {
   }
   private static Pattern pattern = Pattern.compile("^\\}");
   public static Optional<Token> match(String str, int pos) {
-    return Token.match(LBrTok.class, pattern, str, pos);
+    return Token.match(RBrTok.class, pattern, str, pos);
   }
 }

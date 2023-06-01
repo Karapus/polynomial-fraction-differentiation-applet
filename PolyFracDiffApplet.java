@@ -13,6 +13,7 @@ import java.awt.event.*;
 public class PolyFracDiffApplet extends Applet implements ActionListener {
   Button button;
   TextArea input;
+  TextArea output;
   Lexer lexer = new Lexer();
   ArrayList<Token> tokens = null;
 
@@ -23,6 +24,9 @@ public class PolyFracDiffApplet extends Applet implements ActionListener {
     button = new Button("Show derivative");
     add(button);
     button.addActionListener(this);
+
+    output = new TextArea();
+    add(output);
   }
 
   public void paint(Graphics g) {
@@ -36,6 +40,7 @@ public class PolyFracDiffApplet extends Applet implements ActionListener {
       try {
         Node astNode = Frac.parse(tokens);
         System.out.println(astNode.toString());
+        output.setText(astNode.derivative().toString());
       } catch (ParserError parserErr) {
         System.out.println("ERROR: " + parserErr.toString());
         parserErr.printStackTrace(System.out);

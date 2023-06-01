@@ -11,9 +11,7 @@ public abstract class Polynome implements Node {
     head = h;
   }
   static Polynome parse(ArrayList<Token> tokens) throws ParserError {
-      System.out.println(tokens.toString());
     Term term = Term.parse(tokens);
-      System.out.println(tokens.toString());
 
     Op op;
     if (tokens.get(0) instanceof  AddTok)
@@ -31,6 +29,8 @@ public abstract class Polynome implements Node {
   static public Polynome getDefault() {
     return new LastTerm(Term.getDefault());
   }
+  abstract public Polynome derivative();
+  abstract public Polynome clone();
 }
 
 enum Op {
@@ -41,9 +41,9 @@ enum Op {
 class Terms extends Polynome {
   private Op op;
   private Polynome tail;
-  Terms(Term h, Op op, Polynome t) {
+  Terms(Term h, Op o, Polynome t) {
     super(h);
-    op = op;
+    op = o;
     tail = t;
   }
   public String toString() {
@@ -52,7 +52,13 @@ class Terms extends Polynome {
         opStr = "+";
     else
         opStr = "-";
-    return "Polynome [" + head.toString() + opStr + tail.toString() + "]";
+    return head.toString() +  opStr + tail.toString();
+  }
+  public Terms derivative() {
+    return new Terms(head.derivative(), op, tail.derivative());
+  }
+  public Terms clone() {
+    return new Terms(head.clone(), op, tail.clone());
   }
 }
 
@@ -61,6 +67,12 @@ class LastTerm extends Polynome {
     super(h);
   }
   public String toString() {
-    return "Polynome [" + head.toString() + "]";
+    return head.toString();
+  }
+  public LastTerm derivative() {
+    return new LastTerm(head.derivative());
+  }
+  public LastTerm clone() {
+    return new LastTerm(head.clone());
   }
 }

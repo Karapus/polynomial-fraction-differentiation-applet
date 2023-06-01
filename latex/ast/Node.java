@@ -12,4 +12,6 @@ public interface Node {
       return tokens.remove(0);
     throw new ParserError(cls, tokens.get(0));
   }
+  Node derivative();
+  Node clone();
 }
